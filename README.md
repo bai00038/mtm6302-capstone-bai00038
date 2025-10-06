@@ -17,21 +17,22 @@ A modal pop-up is used for HD images instead of a new page, so users don’t los
 ### Favorites Section
 The favorites section is pinned on the home page so users can access their saved items immediately.
 
+## Capstone Prototype Report
 
-**### Steps Taken**
+### Steps Taken
 * Planned and designed a clean, minimal website to showcase interior design styles.
 * Created wireframes in Figma and defined key features: date picker, image view, HD fullscreen, and favourites.
 * Built pages with HTML and CSS (Flex & Grid)for interaction and navigation.
 * Integrated Google Fonts and Material Symbols for consistent visuals.
 * Tested layout responsiveness and refined spacing, alignment, and image display.
 
-**### Resources Used**
+### Resources Used
 * Figma for design mockups
 * Google Fonts & Material Symbols
 * VS Code for development
 * CSS Flex & Grid
 
-**### Challenges Faced**
+### Challenges Faced
 * Aligning icons and text precisely in flex layouts
 * Keeping images responsive and centred in full-screen mode
 * Managing navigation between pages smoothly
