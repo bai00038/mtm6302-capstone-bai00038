@@ -5,35 +5,73 @@
 
 ## Design Decisions
 
-### Date Picker
-I placed the date picker at the top of the page so users can easily select a date before browsing images.
+# Wikimedia Featured Image Viewer
 
-### Image and Details View
-I designed a card layout with both an image and a short description. This makes it easy for users to scan and decide which image they want to explore further.
+This project is a web application that displays the featured image of the day from the Wikimedia API based on a selected date. It includes features such as viewing HD images, adding favorites, and storing data in local storage.
 
-### HD Image View
-A modal pop-up is used for HD images instead of a new page, so users don’t lose context and can quickly close the view to return to browsing.
+---
 
-### Favorites Section
-The favorites section is pinned on the home page so users can access their saved items immediately.
+## Steps Taken to Build the Project
 
-## Capstone Prototype Report
+1. **Project Setup**
+   - Created the basic structure using HTML, CSS, and JavaScript.
+   - Set up DOM elements for image, title, date picker, and description.
 
-### Steps Taken
-* Planned and designed a clean, minimal website to showcase interior design styles.
-* Created wireframes in Figma and defined key features: date picker, image view, HD fullscreen, and favourites.
-* Built pages with HTML and CSS (Flex & Grid)for interaction and navigation.
-* Integrated Google Fonts and Material Symbols for consistent visuals.
-* Tested layout responsiveness and refined spacing, alignment, and image display.
+2. **Fetching API Data**
+   - Used the Wikimedia Featured Feed API to get image data based on the selected date.
+   - Built a utility function `getWikiApiUrl(date)` to construct the correct endpoint.
 
-### Resources Used
-* Figma for design mockups
-* Google Fonts & Material Symbols
-* VS Code for development
-* CSS Flex & Grid
+3. **Rendering Image**
+   - Wrote the `renderMainDisplay()` function to update the DOM with the fetched image, title, date, and description.
+   - Handled empty or missing values gracefully.
 
-### Challenges Faced
-* Aligning icons and text precisely in flex layouts
-* Keeping images responsive and centred in full-screen mode
-* Managing navigation between pages smoothly
-* Maintaining consistent spacing across different devices
+4. **HD Image Modal**
+   - Enabled click-to-enlarge functionality for HD images using a modal popup.
+   - Click again to close the modal.
+
+5. **Favorites Feature**
+   - Added the ability to favorite images by clicking the star icon.
+   - Saved favorites in localStorage to persist across sessions.
+
+6. **Date Picker Interaction**
+   - Added event listeners to fetch and update the image when a new date is selected.
+
+---
+
+## Resources Used
+
+- **Wikimedia Featured Feed API**  
+  https://api.wikimedia.org/wiki/Feed_API/Reference/Featured_content
+  Used to retrieve the featured images.
+
+- **JavaScript Tutorials**  
+  - W3Schools: https://www.w3schools.com/
+
+- **Icons**  
+  - Favorite icons (`favourite_default.svg`, `favourite_filled.svg`)
+  - Delete icon (`delete.svg`)
+
+ - **Bootstrap** 
+ - Utilized Bootstrap utility classes in HTML to enhance UI styling and responsiveness without writing extensive custom CSS.
+
+---
+
+## Challenges Faced & Solutions
+
+- **Missing HD image URL in some API responses**  
+  - Added a fallback to thumbnail image when HD is not available.
+
+- **Image modal not closing properly**  
+  - Added event listener on HD image to toggle modal display.
+
+- **Favorite icon not updating correctly after removing an image**  
+  - Compared current `mainImage.src` with removed favorite and reset the heart icon.
+
+- **LocalStorage not persisting favorites after reload**  
+  - On DOM load, parsed stored favorites and re-rendered them dynamically.
+
+---
+
+## Accessibility Considerations
+- Used semantic HTML elements such as `<header>`, `<main>`, `<section>`, and `<footer>` to structure content meaningfully.
+- Added `alt` attributes to all images to provide descriptive text for screen readers.
