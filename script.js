@@ -1,13 +1,12 @@
-// --- Define DOM Elements ---
+// --- Main Display Image ---
+// Define DOM Elements
 const $mainImage = document.getElementById('main_image')
 const $mainTitle = document.getElementById('main_image_title')
 const $mainDate = document.getElementById('date_picker')
 const $mainDescription = document.getElementById('main_image_description')
 let currentImageHDUrl = "";
 
-
-
-// --- Render Main Display Image ---
+// Render Main Display Image
 function renderMainDisplay(data) {
     $mainImage.src = data.url;
     $mainImage.alt = data.title;
@@ -24,6 +23,14 @@ function renderMainDisplay(data) {
         $addToFavourite.src = './images/favourite_default.svg';
     }
 }
+
+// Add interact to calendar
+$mainDate.addEventListener('change', function (e) {
+    const selectedDate = e.target.value;
+    fetchFeaturedImage(selectedDate);
+    localStorage.setItem('lastSelectedDate', selectedDate);
+})
+
 // --- Construct Wikimedia API URL from selected date ---
 // Build API URL for Wikimedia Featured Image by date
 function getWikiApiUrl(dateString) {
@@ -60,10 +67,10 @@ function fetchFeaturedImage(date) {
         });
 }
 
-// --- Favourite Feature ---
-const $addToFavourite = document.getElementById('icon_favourite');
 
 // Handle add to favourite
+const $addToFavourite = document.getElementById('icon_favourite');
+// Add event listener to add favourite icon
 $addToFavourite.addEventListener('click', () => {
     const thumbnailUrl = $mainImage.src;
     const currentData = {
@@ -85,28 +92,11 @@ $addToFavourite.addEventListener('click', () => {
     updateLocalStorage();
 });
 
-// --- HD Modal Popup--- 
-$mainImage.addEventListener('click', function () {
-    const hdModal = document.getElementById('hd_modal');
-    const hdImage = document.getElementById('hd_image');
-    hdImage.src = currentImageHDUrl;
-    hdModal.style.display = "flex";
-})
-// close modal
-const hdImage = document.getElementById('hd_image');
-hdImage.addEventListener('click', function () {
-    document.getElementById('hd_modal').style.display = "none";
-});
-
+// --- Favourite Feature ---
 // Define variables for the favourite list section
 const $favouriteEmepty = document.getElementById('favourite_empty')
 const $favouriteList = document.getElementById('favourite_list');
 const favourites = [];
-
-// Define local storage function
-function updateLocalStorage() {
-    localStorage.setItem('favourites', JSON.stringify(favourites));
-}
 
 // Render favourite item
 function renderFavouriteItem(data) {
@@ -142,8 +132,17 @@ function renderFavouriteItem(data) {
     $favouriteList.prepend(item);
     $favouriteEmepty.style.display = 'none';
 }
-// --- Favourite Feature ---
-// Handle add to favourite
+
+// --- HD Modal Popup--- 
+// Main display image HD popup
+$mainImage.addEventListener('click', function () {
+    const hdModal = document.getElementById('hd_modal');
+    const hdImage = document.getElementById('hd_image');
+    hdImage.src = currentImageHDUrl;
+    hdModal.style.display = "flex";
+})
+
+// Favouite list image HD popup
 $favouriteList.addEventListener('click', function (e) {
     if (e.target.classList.contains('img')) {
         const hdUrl = e.target.dataset.hdurl;
@@ -153,12 +152,19 @@ $favouriteList.addEventListener('click', function (e) {
         hdModal.style.display = "flex";
     }
 });
-// Add interact to calendar
-$mainDate.addEventListener('change', function (e) {
-    const selectedDate = e.target.value;
-    fetchFeaturedImage(selectedDate);
-    localStorage.setItem('lastSelectedDate', selectedDate);
-})
+
+// close modal
+const hdImage = document.getElementById('hd_image');
+hdImage.addEventListener('click', function () {
+    document.getElementById('hd_modal').style.display = "none";
+});
+
+
+// Define local storage function
+function updateLocalStorage() {
+    localStorage.setItem('favourites', JSON.stringify(favourites));
+}
+
 // Local storage
 document.addEventListener('DOMContentLoaded', () => {
     const storedDate = localStorage.getItem('lastSelectedDate');
